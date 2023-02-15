@@ -6,8 +6,10 @@ import {
   Button,
   FlatList,
   StyleSheet,
+  Modal,
   TouchableOpacity,
 } from 'react-native';
+import { FAB } from 'react-native-paper';
 import MapView from 'react-native-maps';
 import * as Location from 'expo-location';
 
@@ -16,6 +18,7 @@ const App = () => {
   const [newTask, setNewTask] = useState('');
   const [long, setLong] = useState(null);
   const [lat, setLat] = useState(null);
+  const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
     const intervalId = setInterval(async () => {
@@ -31,6 +34,14 @@ const App = () => {
     }, 1000);
     return () => clearInterval(intervalId);
   }, []);
+
+  const openModal = () => {
+    setModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setModalVisible(false);
+  };
 
 
 
@@ -71,6 +82,7 @@ const App = () => {
       onPress={() => toggleCompleted(item.id)}
     >
       <Text style={[styles.title, item.completed && styles.completed]}>
+        {item.completed ? "completed" : "new"}
         {item.title}
       </Text>
       <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -82,15 +94,28 @@ const App = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.form}>
-        <TextInput
-          style={styles.input}
-          value={newTask}
-          onChangeText={(text) => setNewTask(text)}
-          placeholder="Add a task"
-        />
-        <Button title="Add" onPress={addTask} />
-      </View>
+      <FAB
+        icon="plus"
+        label="Open Modal"
+        onPress={openModal}
+      />
+
+      <Modal
+        visible={modalVisible}
+        onRequestClose={closeModal}
+      >
+        <View style={styles.form}>
+          <TextInput
+            style={styles.input}
+            value={newTask}
+            onChangeText={(text) => setNewTask(text)}
+            placeholder="Add a task"
+          />
+          <Button title="Add" onPress={addTask} />
+        </View>
+        {/* Your modal content goes here */}
+      </Modal>
+
       <FlatList
         data={tasks}
         renderItem={renderItem}
