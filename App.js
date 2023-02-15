@@ -10,10 +10,11 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { FAB } from 'react-native-paper';
-import MapView from 'react-native-maps';
 import * as Location from 'expo-location';
 
 const App = () => {
+
+  //Declaring States
   const [tasks, setTasks] = useState([]);
   const [newTask, setNewTask] = useState('');
   const [long, setLong] = useState(null);
@@ -21,6 +22,7 @@ const App = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [visible, setVisible] = useState(false)
 
+  //Requesting for permission and fetching long and lat in background on task added or completed
   useEffect(() => {
     const intervalId = setInterval(async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
@@ -36,10 +38,12 @@ const App = () => {
     return () => clearInterval(intervalId);
   }, []);
 
+  //function to open new task form modal
   const openModal = () => {
     setModalVisible(true);
   };
 
+  //function to close new task form modal
   const closeModal = () => {
     setModalVisible(false);
   };
@@ -49,6 +53,7 @@ const App = () => {
   }
 
 
+  //Function to add new task
   const addTask = () => {
     if (newTask) {
       const task = {
@@ -66,6 +71,8 @@ const App = () => {
     }
   };
 
+
+  //function between task marking the task as copleted or not
   const toggleCompleted = (id) => {
     const newTasks = tasks.map((task) => {
       if (task.id === id) {
@@ -82,6 +89,7 @@ const App = () => {
     setTasks(newTasks);
   };
 
+  //Card to render list of task
   const renderItem = ({ item }) => (
     <TouchableOpacity
       style={styles.item}
