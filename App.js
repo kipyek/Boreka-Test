@@ -19,6 +19,7 @@ const App = () => {
   const [long, setLong] = useState(null);
   const [lat, setLat] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
+  const [visible, setVisible] = useState(false)
 
   useEffect(() => {
     const intervalId = setInterval(async () => {
@@ -43,7 +44,9 @@ const App = () => {
     setModalVisible(false);
   };
 
-
+  const toggleHiding = (item) => {
+    setVisible(!visible)
+  }
 
 
   const addTask = () => {
@@ -52,12 +55,14 @@ const App = () => {
         id: tasks.length + 1,
         title: newTask,
         completed: false,
+        visible: true,
         lat: lat,
         long: long
       };
       setTasks([...tasks, task]);
-      console.log(tasks)
+      console.log(tasks);
       setNewTask('');
+      closeModal();
     }
   };
 
@@ -67,6 +72,7 @@ const App = () => {
         return {
           ...task,
           completed: !task.completed,
+          visible: !visible,
           lat: lat,
           long: long
         };
@@ -81,6 +87,7 @@ const App = () => {
       style={styles.item}
       onPress={() => toggleCompleted(item.id)}
     >
+
       <Text style={[styles.title, item.completed && styles.completed]}>
         {item.completed ? "completed" : "new"}
         {item.title}
@@ -94,6 +101,9 @@ const App = () => {
 
   return (
     <View style={styles.container}>
+      <TouchableOpacity style={{ backgroundColor: 'red', padding: 10 }} onPress={() => toggleHiding()}>
+        <Text>Hello</Text>
+      </TouchableOpacity>
       <FAB
         icon="plus"
         label="Open Modal"
