@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Button, FlatList, Modal, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, Button, FlatList, Modal, TouchableOpacity, Image } from 'react-native';
 import { CustomTabs } from '.';
 import * as Location from 'expo-location';
 import { FAB } from 'react-native-paper';
@@ -90,38 +90,46 @@ export default function Task() {
   //Card to render list of new task
   const renderItem = ({ item }) => (
     !item.completed &&
-    <TouchableOpacity
+    <View
       style={styles.item}
-      onPress={() => toggleCompleted(item.id)}
     >
-      <Text style={[styles.title, item.completed && styles.completed]}>
-        {item.completed ? "completed" : "new"}
-        {item.title}
-      </Text>
-      <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-        <Text>latitude: {item.lat}</Text>
-        <Text>longitude: {item.long}</Text>
+      <View style={styles.name}>
+        <Text style={styles.title}> {item.title}</Text>
+        <Text style={styles.status}>New</Text>
       </View>
-    </TouchableOpacity>
+
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+        <View>
+          <Text style={styles.region}>Latitude: <Text style={{ color: 'grey' }}>{item.lat}</Text></Text>
+          <Text style={styles.region}>Longitude: <Text style={{ color: 'grey' }}>{item.long}</Text></Text>
+        </View>
+        <TouchableOpacity style={styles.markButton} onPress={() => toggleCompleted(item.id)}>
+          <Text>Mark as done</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
 
   );
 
   //Card to render list of completed task
   const renderItems = ({ item }) => (
     item.completed &&
-    (<TouchableOpacity
+    <View
       style={styles.item}
-      onPress={() => toggleCompleted(item.id)}
+
     >
-      <Text style={[styles.title, item.completed && styles.completed]}>
-        {item.completed ? "completed" : "new"}
-        {item.title}
-      </Text>
-      <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-        <Text>latitude: {item.lat}</Text>
-        <Text>longitude: {item.long}</Text>
+      <View style={styles.name}>
+        <Text style={styles.title}> {item.title}</Text>
+        <Text style={styles.status}>Completed</Text>
       </View>
-    </TouchableOpacity>)
+
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+        <View>
+          <Text style={styles.region}>Latitude: <Text style={{ color: 'grey' }}>{item.lat}</Text></Text>
+          <Text style={styles.region}>Longitude: <Text style={{ color: 'grey' }}>{item.long}</Text></Text>
+        </View>
+      </View>
+    </View>
 
   );
 
@@ -134,13 +142,23 @@ export default function Task() {
           option2="Completed Task"
           onSelectSwitch={onTabSelected}
         />
-
+        {/*checking which tab you are in and also checking whethere you have added the task or not*/}
         {tabSelected === 1 ?
-          <FlatList
-            data={tasks}
-            renderItem={renderItem}
-            keyExtractor={(item) => item.id.toString()}
-          />
+          tasks.length > 0 ?
+            <FlatList
+              data={tasks}
+              renderItem={renderItem}
+              keyExtractor={(item) => item.id.toString()}
+            />
+            :
+            <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 30 }}>
+              <Image
+                source={require('../assets/nothing.png')}
+                style={{ width: 150, height: 250, marginBottom: 20, resizeMode: 'contain' }}
+              />
+              <Text style={{ fontSize: 13, color: '#000', fontWeight: 'bold' }}>SORRY!</Text>
+              <Text style={{ fontSize: 16, color: '#737373', fontWeight: '500' }}>No task added yet..</Text>
+            </View>
 
           :
           <FlatList
@@ -155,9 +173,6 @@ export default function Task() {
   return (
     <View style={{ flex: 1 }}>
       {handleButton()}
-
-
-
       <FAB
         style={styles.fab}
         small
@@ -174,11 +189,13 @@ export default function Task() {
         <View style={styles.mainaddtask}>
           <Text style={styles.AddTask}>Add Task</Text>
         </View>
-
+        <Text style={styles.warning}>*max. characters for title is 20</Text>
         <View style={styles.form}>
+
           <TextInput
             style={styles.input}
             value={newTask}
+            maxLength={20}
             onChangeText={(text) => setNewTask(text)}
             placeholder="Add a task title"
           />

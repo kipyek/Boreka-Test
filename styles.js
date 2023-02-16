@@ -9,7 +9,7 @@ export default StyleSheet.create({
 
   form: {
     alignItems: 'center',
-    margin: 10,
+    margin: 4,
   },
 
   input: {
@@ -18,7 +18,8 @@ export default StyleSheet.create({
     width: 300,
     marginVertical: 10,
     paddingVertical: 4,
-    paddingLeft: 10
+    paddingLeft: 10,
+
   },
 
   inputs: {
@@ -39,13 +40,20 @@ export default StyleSheet.create({
   },
 
   title: {
-    flex: 1,
-    fontSize: 16,
-    padding: 10,
+    marginRight: 20,
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: 'black',
+    borderBottomWidth: 1
   },
 
   completed: {
     textDecorationLine: 'line-through',
+  },
+  warning: {
+    color: 'red',
+    marginLeft: 20,
+    marginTop: 5
   },
 
   fab: {
@@ -87,6 +95,29 @@ export default StyleSheet.create({
   mainaddtask: {
     backgroundColor: 'grey',
     paddingVertical: 16
+  },
+  name: {
+    flexDirection: 'row',
+    paddingVertical: 10,
+    alignItems: 'center',
+    flexWrap: 'wrap'
+
+  },
+  status: {
+    backgroundColor: 'grey',
+    padding: 6,
+    borderRadius: 22
+  },
+  markButton: {
+    backgroundColor: 'orange',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 5,
+    borderRadius: 5
+  },
+  region: {
+    fontSize: 16,
+    fontWeight: 'bold'
   }
 
   ,
