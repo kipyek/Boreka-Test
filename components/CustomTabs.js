@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, TouchableOpacity, Text } from 'react-native';
+import styles from "../styles"
 
 export default function CustomTabs({
   selectionMode,
@@ -15,16 +16,9 @@ export default function CustomTabs({
   };
 
   return (
-    <View
-      style={{
-        height: 34,
-        width: '100%',
-        backgroundColor: '#e4e4e4',
-        borderRadius: 10,
-        borderColor: '#AD40AF',
-        flexDirection: 'row',
-        justifyContent: 'center',
-      }}>
+    <View style={styles.tabs}>
+
+      {/*Creating Tab for new task*/}
       <TouchableOpacity
         activeOpacity={1}
         onPress={() => updateSwitchData(1)}
@@ -45,6 +39,7 @@ export default function CustomTabs({
         </Text>
       </TouchableOpacity>
 
+      {/*Creating Tab for completed task*/}
       <TouchableOpacity
         activeOpacity={1}
         onPress={() => updateSwitchData(2)}

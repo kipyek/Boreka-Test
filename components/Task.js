@@ -154,7 +154,7 @@ export default function Task() {
             <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 30 }}>
               <Image
                 source={require('../assets/nothing.png')}
-                style={{ width: 150, height: 250, marginBottom: 20, resizeMode: 'contain' }}
+                style={styles.image}
               />
               <Text style={{ fontSize: 13, color: '#000', fontWeight: 'bold' }}>SORRY!</Text>
               <Text style={{ fontSize: 16, color: '#737373', fontWeight: '500' }}>No task added yet..</Text>
@@ -172,7 +172,10 @@ export default function Task() {
   }
   return (
     <View style={{ flex: 1 }}>
+      {/*Rendering task list conditionally*/}
       {handleButton()}
+
+      {/*Floating button for opening new task modal */}
       <FAB
         style={styles.fab}
         small
@@ -189,9 +192,9 @@ export default function Task() {
         <View style={styles.mainaddtask}>
           <Text style={styles.AddTask}>Add Task</Text>
         </View>
+        {/*Input text for title and description*/}
         <Text style={styles.warning}>*max. characters for title is 20</Text>
         <View style={styles.form}>
-
           <TextInput
             style={styles.input}
             value={newTask}
@@ -209,11 +212,12 @@ export default function Task() {
           />
 
         </View>
-
+        {/*Button to add new task*/}
         <View style={{ marginHorizontal: 20 }}>
           <Button
-            title="Add"
+            title="Add Task"
             onPress={addTask}
+            color='peru'
 
           />
         </View>

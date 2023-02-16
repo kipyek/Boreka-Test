@@ -4,7 +4,6 @@ export default StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    marginTop: 30
   },
 
   form: {
@@ -89,7 +88,7 @@ export default StyleSheet.create({
   },
   maintasklist: {
     backgroundColor: 'grey',
-    paddingBottom: 10,
+    paddingBottom: 20,
     paddingVertical: 16
   },
   mainaddtask: {
@@ -118,6 +117,21 @@ export default StyleSheet.create({
   region: {
     fontSize: 16,
     fontWeight: 'bold'
+  },
+  image: {
+    width: 150,
+    height: 250,
+    marginBottom: 20,
+    resizeMode: 'contain'
+  },
+  tabs: {
+    height: 34,
+    width: '100%',
+    backgroundColor: '#e4e4e4',
+    borderRadius: 10,
+    borderColor: '#AD40AF',
+    flexDirection: 'row',
+    justifyContent: 'center',
   }
 
   ,
